@@ -13,6 +13,11 @@ buildscript {
 
 apply plugin: 'org.jetbrains.kotlin.platform.native'
 
+dependencies {
+    testImplementation 'org.jetbrains.kotlin:kotlin-test-common'
+    testImplementation 'org.jetbrains.kotlin:kotlin-test-annotations-common'
+}
+
 components.main {
     targets = ['macos_x64', 'linux_x64']
     outputKinds = [EXECUTABLE]
