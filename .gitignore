@@ -59,3 +59,6 @@ hs_err_pid*
 
 # vscode
 .vscode/tasks.json
+
+# IntelliJ
+.idea

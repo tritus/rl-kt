@@ -1,9 +1,9 @@
 package learning
 
-import brain.StickMoverBrain
-import environment.MovingStick
-import display.DisplayManager
-import geometry.Size
+import stick.brain.StickMoverBrain
+import stick.environment.MovingStick
+import stick.display.DisplayManager
+import stick.geometry.Size
 
 fun main() {
     MovingStick()

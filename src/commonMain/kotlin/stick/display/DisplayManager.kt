@@ -1,7 +1,6 @@
-package display
+package stick.display
 
-import geometry.Size
-import display.DisplayableItem
+import stick.geometry.Size
 
 class DisplayManager(val size: Size<Int>) {
     fun display(display: DisplayableItem) {

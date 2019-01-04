@@ -1,3 +1,3 @@
-package brain
+package stick.brain
 
 interface MovableStick

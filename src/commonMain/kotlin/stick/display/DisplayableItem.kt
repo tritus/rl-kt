@@ -1,3 +1,3 @@
-package display
+package stick.display
 
 interface DisplayableItem

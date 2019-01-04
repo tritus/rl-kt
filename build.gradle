@@ -6,43 +6,30 @@ repositories {
     mavenCentral()
 }
 
+group 'com.tritus'
+version '0.0.1'
+
 kotlin {
     targets {
         fromPreset(kotlin.presets.macosX64, 'macos') {
-            compilations.main.outputKinds 'EXECUTABLE'
-            compilations.main.entryPoint 'learning.main'
+            compilations.main.outputKinds 'executable'
         }
         fromPreset(kotlin.presets.linuxX64, 'linux') {
-            compilations.main.outputKinds 'EXECUTABLE'
-            compilations.main.entryPoint 'learning.main'
+            compilations.main.outputKinds 'executable'
         }
     }
 
     sourceSets {
         commonMain {
-            kotlin.srcDir('src/main')
             dependencies {
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
             }
         }
         commonTest {
-            kotlin.srcDir('src/test')
             dependencies {
                 implementation 'org.jetbrains.kotlin:kotlin-test-common'
                 implementation 'org.jetbrains.kotlin:kotlin-test-annotations-common'
             }
-        }
-        linuxMain {
-            dependsOn commonMain
-        }
-        macosMain {
-            dependsOn commonMain
-        }
-        linuxTest {
-            dependsOn commonTest
-        }
-        macosTest {
-            dependsOn commonTest
         }
     }
 }
