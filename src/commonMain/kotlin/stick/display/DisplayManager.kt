@@ -1,11 +1,34 @@
 package stick.display
 
-class DisplayManager(val display: Display) {
-    fun display(displayableItem: DisplayableItem) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+
+class DisplayManager(private val display: Display, val itemDrawer: ItemDrawer) {
+
+    private var isRecycling = false
+    private val displayableItems = mutableListOf<DisplayableItem>()
+
+    init {
+        GlobalScope.launch {
+            while (!isRecycling) {
+                refresh()
+            }
+        }
     }
 
-    fun refresh() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    fun display(displayableItem: DisplayableItem) {
+        displayableItems.add(displayableItem)
+    }
+
+    private fun refresh() {
+        displayableItems.forEach { displayItem(it) }
+    }
+
+    private fun displayItem(item: DisplayableItem) {
+        itemDrawer.draw(item, display)
+    }
+
+    fun recycle() {
+        isRecycling = true
     }
 }

@@ -3,6 +3,7 @@ plugins {
 }
 
 repositories {
+    jcenter()
     mavenCentral()
 }
 
@@ -23,12 +24,23 @@ kotlin {
         commonMain {
             dependencies {
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
+                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.1.0'
             }
         }
         commonTest {
             dependencies {
                 implementation 'org.jetbrains.kotlin:kotlin-test-common'
                 implementation 'org.jetbrains.kotlin:kotlin-test-annotations-common'
+            }
+        }
+        linuxMain {
+            dependencies {
+                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.1.0'
+            }
+        }
+        macosMain {
+            dependencies {
+                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.1.0'
             }
         }
     }

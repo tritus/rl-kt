@@ -9,21 +9,21 @@ class DisplayManagerTest {
     fun testDisplay1Image() {
         val display = display5x5Stub()
         val itemToDisplay = DisplayItemStub()
-        val displayManager = DisplayManager(display)
+        val displayManager = DisplayManager(display, StickDrawer())
         displayManager.display(itemToDisplay)
         assertTrue { display.screen[3][2] == 1 && display.screen[4][4] == 1 }
+        displayManager.recycle()
     }
 
     @Test
     fun testDisplay2Images() {
         val display = display5x5Stub()
         val itemToDisplay = DisplayItemStub()
-        val displayManager = DisplayManager(display)
+        val displayManager = DisplayManager(display, StickDrawer())
         displayManager.display(itemToDisplay)
-        assertTrue { display.screen[3][2] == 1 && display.screen[4][4] == 1 && display.screen[2][2] == 0 }
         itemToDisplay.drawSinglePixelAt(3, 3)
-        displayManager.refresh()
         assertTrue { display.screen[3][2] == 0 && display.screen[4][4] == 0 && display.screen[3][3] == 1 }
+        displayManager.recycle()
     }
 
     private fun display5x5Stub(): DisplayStub {
