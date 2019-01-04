@@ -1,10 +1,53 @@
 package stick.display
 
+import stick.geometry.Size
 import kotlin.test.Test
+import kotlin.test.assertTrue
 
 class DisplayManagerTest {
     @Test
-    fun simpleTest() {
-        print("hourra")
+    fun testDisplay1Image() {
+        val display = display5x5Stub()
+        val itemToDisplay = DisplayItemStub()
+        val displayManager = DisplayManager(display)
+        displayManager.display(itemToDisplay)
+        assertTrue { display.screen[3][2] == 1 && display.screen[4][4] == 1 }
+    }
+
+    @Test
+    fun testDisplay2Images() {
+        val display = display5x5Stub()
+        val itemToDisplay = DisplayItemStub()
+        val displayManager = DisplayManager(display)
+        displayManager.display(itemToDisplay)
+        assertTrue { display.screen[3][2] == 1 && display.screen[4][4] == 1 && display.screen[2][2] == 0 }
+        itemToDisplay.drawSinglePixelAt(3, 3)
+        displayManager.refresh()
+        assertTrue { display.screen[3][2] == 0 && display.screen[4][4] == 0 && display.screen[3][3] == 1 }
+    }
+
+    private fun display5x5Stub(): DisplayStub {
+        return DisplayStub(Size(5, 5))
+    }
+
+    class DisplayItemStub : DisplayableItem {
+        private var pixels = listOf(
+                3 to 2,
+                4 to 4
+        )
+
+        fun drawSinglePixelAt(row: Int, column: Int) {
+            pixels = listOf(row to column)
+        }
+    }
+
+    class DisplayStub(size: Size<Int>) : Display {
+        val screen = (1 until size.width)
+                .map {
+                    (1 until size.height)
+                            .map { 0 }
+                            .toMutableList()
+                }
+                .toMutableList()
     }
 }

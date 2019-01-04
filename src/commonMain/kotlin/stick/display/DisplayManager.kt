@@ -1,9 +1,11 @@
 package stick.display
 
-import stick.geometry.Size
+class DisplayManager(val display: Display) {
+    fun display(displayableItem: DisplayableItem) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
-class DisplayManager(val size: Size<Int>) {
-    fun display(display: DisplayableItem) {
-
+    fun refresh() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
