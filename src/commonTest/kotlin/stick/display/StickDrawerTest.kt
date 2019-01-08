@@ -9,12 +9,11 @@ class StickDrawerTest {
     fun testDraw() {
         val display = TestDisplay()
         StickDrawer().draw(Stick(), display)
-        dd// TODO : define expected screen
         val expectedMatrix = listOf(
                 listOf(0, 0, 0, 0, 0),
                 listOf(0, 0, 0, 0, 0),
-                listOf(0, 0, 0, 0, 0),
-                listOf(0, 0, 0, 0, 0)
+                listOf(1, 0, 0, 0, 0),
+                listOf(1, 1, 0, 0, 0)
         )
         expectedMatrix.forEachIndexed { lineIndex, line -> line.forEachIndexed { columnIndex, pixel -> assertEquals(pixel, display.screenMatrix[lineIndex][columnIndex]) } }
     }
