@@ -1,6 +1,8 @@
 package stick.display
 
 import stick.geometry.Point
+import kotlin.math.cos
+import kotlin.math.sin
 
 class StickDrawer : ItemDrawer {
     override fun draw(item: DisplayableItem, display: Display) {
@@ -8,10 +10,17 @@ class StickDrawer : ItemDrawer {
     }
 
     private fun drawStick(display: Display, originCm: Point<Float>, lengthCm: Float, angleRad: Float) {
-        var image = (1 until display.height).map { (1 until display.width).map { 0 } }
-        val widthCm = 100f
-        val heightCm = widthCm * display.height.toFloat() / display.width.toFloat()
-
+        val image = (0 until display.width).map { (0 until display.height).map { 0 }.toMutableList() }
+        val maxXCm = 30f
+        val maxYCm = 20f
+        val cmToCoordinateOnX = maxXCm / display.width.toFloat()
+        val cmToCoordinateOnY = maxYCm / display.height.toFloat()
+        val startingX = originCm.x * cmToCoordinateOnX
+        val startingYFromTop = (maxYCm - originCm.y) * cmToCoordinateOnY
+        image[startingX.toInt()][startingYFromTop.toInt()] = 1
+        val endingX = (originCm.x + lengthCm * cos(angleRad)) * cmToCoordinateOnX
+        val endingYFromTop = (maxYCm - (originCm.y + lengthCm * sin(angleRad))) * cmToCoordinateOnY
+        image[endingX.toInt()][endingYFromTop.toInt()] = 1
         display.draw(image)
     }
 }

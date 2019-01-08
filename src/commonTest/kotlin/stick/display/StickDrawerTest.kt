@@ -13,7 +13,7 @@ class StickDrawerTest {
                 listOf(0, 0, 0, 0, 0),
                 listOf(0, 0, 0, 0, 0),
                 listOf(1, 0, 0, 0, 0),
-                listOf(1, 1, 0, 0, 0)
+                listOf(0, 1, 0, 0, 0)
         )
         expectedMatrix.forEachIndexed { lineIndex, line -> line.forEachIndexed { columnIndex, pixel -> assertEquals(pixel, display.screenMatrix[lineIndex][columnIndex]) } }
     }
