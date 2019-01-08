@@ -1,6 +1,8 @@
 package stick.display
 
+import stick.geometry.Point
 import stick.geometry.Size
+import stick.waitFor
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
@@ -11,7 +13,7 @@ class DisplayManagerTest {
         val itemToDisplay = DisplayItemStub()
         val displayManager = DisplayManager(display, StickDrawer())
         displayManager.display(itemToDisplay)
-        assertTrue { display.screen[3][2] == 1 && display.screen[4][4] == 1 }
+        assertTrue { display.screen[3][2] == 1 && display.screen[4][4] == 0 }
         displayManager.recycle()
     }
 
@@ -21,7 +23,8 @@ class DisplayManagerTest {
         val itemToDisplay = DisplayItemStub()
         val displayManager = DisplayManager(display, StickDrawer())
         displayManager.display(itemToDisplay)
-        itemToDisplay.drawSinglePixelAt(3, 3)
+        itemToDisplay.originCm = Point(12.1f, 12.1f)
+        waitFor(1000)
         assertTrue { display.screen[3][2] == 0 && display.screen[4][4] == 0 && display.screen[3][3] == 1 }
         displayManager.recycle()
     }
@@ -31,23 +34,24 @@ class DisplayManagerTest {
     }
 
     class DisplayItemStub : DisplayableItem {
-        private var pixels = listOf(
-                3 to 2,
-                4 to 4
-        )
-
-        fun drawSinglePixelAt(row: Int, column: Int) {
-            pixels = listOf(row to column)
-        }
+        override var originCm: Point<Float> = Point(12.1f, 8.1f)
+        override val radiusCm: Float = 0f
+        override val angleRad: Float = 0f
     }
 
     class DisplayStub(size: Size<Int>) : Display {
-        val screen = (1 until size.width)
+        val screen = (0 until size.width)
                 .map {
-                    (1 until size.height)
+                    (0 until size.height)
                             .map { 0 }
                             .toMutableList()
                 }
-                .toMutableList()
+        override val width: Int = screen.size
+
+        override val height: Int = screen.first().size
+
+        override fun draw(image: List<List<Int>>) {
+            image.forEachIndexed { lineIndex, line -> line.forEachIndexed { columnIndex, pixelValue -> screen[columnIndex][lineIndex] = pixelValue } }
+        }
     }
 }

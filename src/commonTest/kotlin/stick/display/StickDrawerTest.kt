@@ -22,7 +22,7 @@ class StickDrawerTest {
         override val width: Int = 5
         override val height: Int = 4
 
-        val screenMatrix = (1 until height).map { (1 until width).map { 0 }.toMutableList() }
+        val screenMatrix = (0 until height).map { (0 until width).map { 0 }.toMutableList() }
 
         override fun draw(image: List<List<Int>>) {
             image.forEachIndexed { lineIndex, line -> line.forEachIndexed { columnIndex, pixel -> screenMatrix[lineIndex][columnIndex] = pixel } }
