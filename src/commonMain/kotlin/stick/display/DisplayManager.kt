@@ -1,17 +1,19 @@
 package stick.display
 
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class DisplayManager(private val display: Display, val itemDrawer: ItemDrawer) {
+class DisplayManager(scope: CoroutineScope, private val display: Display, val itemDrawer: ItemDrawer) {
 
     private var isRecycling = false
     private val displayableItems = mutableListOf<DisplayableItem>()
 
     init {
-        GlobalScope.launch {
+        scope.launch {
             while (!isRecycling) {
                 refresh()
+                delay(40)
             }
         }
     }

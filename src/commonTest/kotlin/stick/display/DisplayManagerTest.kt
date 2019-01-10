@@ -1,37 +1,41 @@
 package stick.display
 
+import kotlinx.coroutines.delay
 import stick.geometry.Point
 import stick.geometry.Size
-import stick.waitFor
+import stick.runInScope
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class DisplayManagerTest {
     @Test
     fun testDisplay1Image() {
-        val display = display5x5Stub()
-        val itemToDisplay = DisplayItemStub()
-        val displayManager = DisplayManager(display, StickDrawer())
-        displayManager.display(itemToDisplay)
-        waitFor(1000)
-        assertEquals(1, display.screen[3][2], "screen : ${display.screen}")
-        assertEquals(0, display.screen[4][4], "screen : ${display.screen}")
-        displayManager.recycle()
+        runInScope {
+            val display = display5x5Stub()
+            val itemToDisplay = DisplayItemStub()
+            val displayManager = DisplayManager(this, display, StickDrawer())
+            displayManager.display(itemToDisplay)
+            delay(100)
+            assertEquals(1, display.screen[4][1], "screen : ${display.screen}")
+            assertEquals(0, display.screen[4][4], "screen : ${display.screen}")
+            displayManager.recycle()
+        }
     }
 
     @Test
     fun testDisplay2Images() {
-        val display = display5x5Stub()
-        val itemToDisplay = DisplayItemStub()
-        val displayManager = DisplayManager(display, StickDrawer())
-        displayManager.display(itemToDisplay)
-        itemToDisplay.originCm = Point(12.1f, 12.1f)
-        waitFor(1000)
-        assertEquals(0, display.screen[3][2], "screen : ${display.screen}")
-        assertEquals(0, display.screen[4][4], "screen : ${display.screen}")
-        assertEquals(1, display.screen[3][3], "screen : ${display.screen}")
-        displayManager.recycle()
+        runInScope {
+            val display = display5x5Stub()
+            val itemToDisplay = DisplayItemStub()
+            val displayManager = DisplayManager(this, display, StickDrawer())
+            displayManager.display(itemToDisplay)
+            itemToDisplay.originCm = Point(12.1f, 12.1f)
+            delay(100)
+            assertEquals(0, display.screen[3][2], "screen : ${display.screen}")
+            assertEquals(0, display.screen[4][4], "screen : ${display.screen}")
+            assertEquals(1, display.screen[2][1], "screen : ${display.screen}")
+            displayManager.recycle()
+        }
     }
 
     private fun display5x5Stub(): DisplayStub {
@@ -39,7 +43,7 @@ class DisplayManagerTest {
     }
 
     class DisplayItemStub : DisplayableItem {
-        override var originCm: Point<Float> = Point(12.1f, 8.1f)
+        override var originCm: Point<Float> = Point(24.1f, 12.1f)
         override val radiusCm: Float = 0f
         override val angleRad: Float = 0f
     }
@@ -56,7 +60,7 @@ class DisplayManagerTest {
         override val height: Int = screen.first().size
 
         override fun draw(image: List<List<Int>>) {
-            image.forEachIndexed { lineIndex, line -> line.forEachIndexed { columnIndex, pixelValue -> screen[columnIndex][lineIndex] = pixelValue } }
+            image.forEachIndexed { columnIndex, column -> column.forEachIndexed { lineIndex, pixelValue -> screen[columnIndex][lineIndex] = pixelValue } }
         }
     }
 }
