@@ -15,7 +15,7 @@ class StickDrawerTest {
                 listOf(1, 0, 0, 0, 0),
                 listOf(0, 1, 0, 0, 0)
         )
-        expectedMatrix.forEachIndexed { lineIndex, line -> line.forEachIndexed { columnIndex, pixel -> assertEquals(pixel, display.screenMatrix[lineIndex][columnIndex]) } }
+        expectedMatrix.forEachIndexed { lineIndex, line -> line.forEachIndexed { columnIndex, pixel -> assertEquals(pixel, display.screenMatrix[lineIndex][columnIndex], "expected : $expectedMatrix, got : ${display.screenMatrix}") } }
     }
 
     class TestDisplay: Display {
@@ -25,12 +25,12 @@ class StickDrawerTest {
         val screenMatrix = (0 until height).map { (0 until width).map { 0 }.toMutableList() }
 
         override fun draw(image: List<List<Int>>) {
-            image.forEachIndexed { lineIndex, line -> line.forEachIndexed { columnIndex, pixel -> screenMatrix[lineIndex][columnIndex] = pixel } }
+            image.forEachIndexed { columnIndex, column -> column.forEachIndexed { lineIndex, pixel -> screenMatrix[lineIndex][columnIndex] = pixel } }
         }
     }
 
     class Stick: DisplayableItem {
-        override val originCm = Point(5f, 3f)
+        override val originCm = Point(6f, 3f)
         override val radiusCm = 3f
         override val angleRad = 2f / 3f * 3.14f
     }

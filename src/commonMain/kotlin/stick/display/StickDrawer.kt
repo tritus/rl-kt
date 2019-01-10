@@ -13,8 +13,8 @@ class StickDrawer : ItemDrawer {
         val image = (0 until display.width).map { (0 until display.height).map { 0 }.toMutableList() }
         val maxXCm = 30f
         val maxYCm = 20f
-        val cmToCoordinateOnX = maxXCm / display.width.toFloat()
-        val cmToCoordinateOnY = maxYCm / display.height.toFloat()
+        val cmToCoordinateOnX = display.width.toFloat() / maxXCm
+        val cmToCoordinateOnY = display.height.toFloat() / maxYCm
         val startingX = originCm.x * cmToCoordinateOnX
         val startingYFromTop = (maxYCm - originCm.y) * cmToCoordinateOnY
         image[startingX.toInt()][startingYFromTop.toInt()] = 1

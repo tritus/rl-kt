@@ -4,6 +4,7 @@ import stick.geometry.Point
 import stick.geometry.Size
 import stick.waitFor
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class DisplayManagerTest {
@@ -13,7 +14,9 @@ class DisplayManagerTest {
         val itemToDisplay = DisplayItemStub()
         val displayManager = DisplayManager(display, StickDrawer())
         displayManager.display(itemToDisplay)
-        assertTrue { display.screen[3][2] == 1 && display.screen[4][4] == 0 }
+        waitFor(1000)
+        assertEquals(1, display.screen[3][2], "screen : ${display.screen}")
+        assertEquals(0, display.screen[4][4], "screen : ${display.screen}")
         displayManager.recycle()
     }
 
@@ -25,7 +28,9 @@ class DisplayManagerTest {
         displayManager.display(itemToDisplay)
         itemToDisplay.originCm = Point(12.1f, 12.1f)
         waitFor(1000)
-        assertTrue { display.screen[3][2] == 0 && display.screen[4][4] == 0 && display.screen[3][3] == 1 }
+        assertEquals(0, display.screen[3][2], "screen : ${display.screen}")
+        assertEquals(0, display.screen[4][4], "screen : ${display.screen}")
+        assertEquals(1, display.screen[3][3], "screen : ${display.screen}")
         displayManager.recycle()
     }
 
