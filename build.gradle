@@ -14,9 +14,11 @@ kotlin {
     targets {
         fromPreset(kotlin.presets.macosX64, 'macos') {
             compilations.main.outputKinds 'executable'
+            compilations.main.entryPoint 'stick.main'
         }
         fromPreset(kotlin.presets.linuxX64, 'linux') {
             compilations.main.outputKinds 'executable'
+            compilations.main.entryPoint 'stick.main'
         }
     }
 
