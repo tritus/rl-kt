@@ -3,12 +3,10 @@ package stick.environment
 import stick.brain.MovableStick
 import stick.display.DisplayableItem
 import stick.geometry.Point
+import kotlin.math.PI
 
-class MovingStick: MovableStick, DisplayableItem {// TODO : Implement physiscs
-    override val originCm: Point<Float>
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-    override val radiusCm: Float
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-    override val angleRad: Float
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+class MovingStick: MovableStick, DisplayableItem {
+    override var originCm = Point(15f, 10f)
+    override val radiusCm: Float = 4.8f
+    override var angleRad: Float = -PI.toFloat()/2f
 }
