@@ -1,3 +1,5 @@
 package stick.brain
 
-interface MovableStick
+interface MovableStick {
+    fun moveByXCm(dx: Float)
+}
