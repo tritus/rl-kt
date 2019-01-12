@@ -5,6 +5,7 @@ import kotlinx.coroutines.delay
 import stick.environment.MovingStick
 import stick.geometry.Point
 import stick.runInScope
+import stick.stickCartSpeedMPerS
 import kotlin.math.PI
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -51,6 +52,6 @@ class MovingStickTest {
     }
 
     private fun newMovingStick(scope: CoroutineScope): MovingStick {
-        return MovingStick(Point(15f, 10f), 4.8f, -PI.toFloat()/2f, 0.5f, scope)
+        return MovingStick(Point(15f, 10f), 4.8f, -PI.toFloat()/2f, 0.5f, 1f, 0.02f, scope)
     }
 }

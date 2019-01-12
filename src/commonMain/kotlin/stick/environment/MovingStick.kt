@@ -15,19 +15,19 @@ class MovingStick(
         override val radiusCm: Float,
         override var angleRad: Float,
         private val massKg: Float,
+        private val movingSpeedMPerS: Float,
+        private val timeIntervalInS: Float,
         scope: CoroutineScope
 ) : MovableStick, DisplayableItem, RecyclableObject {
 
-    private val timeIntervalInS = 0.02f
-    private val movingSpeedMPerS = 1f
     private var isRecycling = false
     private var remainingMovingDistanceM = 0f
     private var movingDirection = 0f
 
     init {
         scope.launch {
+            val timeIntervalInMs = (timeIntervalInS * 1000f).toLong()
             while (!isRecycling) {
-                val timeIntervalInMs = (timeIntervalInS * 1000f).toLong()
                 computeNextValues()
                 delay(timeIntervalInMs)
             }

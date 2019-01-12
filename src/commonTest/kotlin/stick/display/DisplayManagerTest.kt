@@ -13,7 +13,7 @@ class DisplayManagerTest {
         runInScope {
             val display = display5x5Stub()
             val itemToDisplay = DisplayItemStub()
-            val displayManager = DisplayManager(this, display, StickDrawer())
+            val displayManager = DisplayManager(this, display, StickDrawer(), 40)
             displayManager.display(itemToDisplay)
             delay(100)
             assertEquals(1, display.screen[4][1], "screen : ${display.screen}")
@@ -27,7 +27,7 @@ class DisplayManagerTest {
         runInScope {
             val display = display5x5Stub()
             val itemToDisplay = DisplayItemStub()
-            val displayManager = DisplayManager(this, display, StickDrawer())
+            val displayManager = DisplayManager(this, display, StickDrawer(), 40)
             displayManager.display(itemToDisplay)
             itemToDisplay.originCm = Point(12.1f, 12.1f)
             delay(100)
