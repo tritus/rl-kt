@@ -35,12 +35,16 @@ class MovingStick(
     }
 
     private fun computeNextValues() {
-        computeMovingOrder()
+        setNewXOrigin()
+        computeNewMovingOrder()
+    }
+
+    private fun setNewXOrigin() {
         val newX = originCm.x + movingDirection * movingSpeedMPerS
         originCm = Point(newX, originCm.y)
     }
 
-    private fun computeMovingOrder() {
+    private fun computeNewMovingOrder() {
         if (remainingMovingDistanceM > 0) {
             remainingMovingDistanceM -= timeIntervalInS * movingSpeedMPerS
         } else {
