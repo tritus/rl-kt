@@ -3,8 +3,9 @@ package stick.display
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import stick.lifecycle.RecyclableObject
 
-class DisplayManager(scope: CoroutineScope, private val display: Display, val itemDrawer: ItemDrawer) {
+class DisplayManager(scope: CoroutineScope, private val display: Display, private val itemDrawer: ItemDrawer, private val refreshTimeInMs: Long): RecyclableObject {
 
     private var isRecycling = false
     private val displayableItems = mutableListOf<DisplayableItem>()
@@ -13,7 +14,7 @@ class DisplayManager(scope: CoroutineScope, private val display: Display, val it
         scope.launch {
             while (!isRecycling) {
                 refresh()
-                delay(40)
+                delay(refreshTimeInMs)
             }
         }
     }
@@ -30,7 +31,7 @@ class DisplayManager(scope: CoroutineScope, private val display: Display, val it
         itemDrawer.draw(item, display)
     }
 
-    fun recycle() {
+    override fun recycle() {
         isRecycling = true
     }
 }
