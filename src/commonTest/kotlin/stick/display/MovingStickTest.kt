@@ -32,9 +32,9 @@ class MovingStickTest {
         runInScope {
             val stick = newMovingStick(this)
             stick.moveByXCm(5f)
-            delay(100)
+            delay(3000)
             val verticalAngle = - PI / 2
-            assertTrue { stick.angleRad < verticalAngle + toleranceIntervalRad || stick.angleRad > verticalAngle - toleranceIntervalRad }
+            assertTrue { stick.angleRad < verticalAngle + toleranceIntervalRad && stick.angleRad > verticalAngle - toleranceIntervalRad }
             stick.recycle()
         }
     }
@@ -52,6 +52,6 @@ class MovingStickTest {
     }
 
     private fun newMovingStick(scope: CoroutineScope): MovingStick {
-        return MovingStick(Point(15f, 10f), 4.8f, -PI.toFloat()/2f, 0.5f, 1f, 0.02f, scope)
+        return MovingStick(Point(15f, 10f), 4.8f, -PI.toFloat()/2f, 0.5f, 1f, 0.02f, 0.001f, scope)
     }
 }

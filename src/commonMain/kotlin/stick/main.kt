@@ -24,6 +24,7 @@ const val stickInitialRadiusCm = 4.8f
 const val stickInitialAngleRad = -PI.toFloat() / 2f
 const val stickEndMassKg = 0.5f
 const val stickCartSpeedMPerS = 1f
+const val pivotFrictionCoefInNMS = 0.001f
 
 expect fun runInScope(block: suspend CoroutineScope.() -> Unit)
 
@@ -37,6 +38,7 @@ fun main() {
                 stickEndMassKg,
                 stickCartSpeedMPerS,
                 1f / (displayFPS.toFloat() * 2),
+                pivotFrictionCoefInNMS,
                 this
         )
                 .also { recyclableItems.add(it) }
