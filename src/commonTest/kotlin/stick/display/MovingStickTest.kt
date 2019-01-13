@@ -51,6 +51,18 @@ class MovingStickTest {
         }
     }
 
+    @Test
+    fun testStickAngleEvolvesInTheExpectedDirectionWhenNegativeMovementImposed() {
+        runInScope {
+            val stick = newMovingStick(this)
+            stick.moveByXCm(-5f)
+            delay(100)
+            val verticalAngle = - PI / 2
+            assertTrue { stick.angleRad > verticalAngle + toleranceIntervalRad}
+            stick.recycle()
+        }
+    }
+
     private fun newMovingStick(scope: CoroutineScope): MovingStick {
         return MovingStick(Point(15f, 10f), 4.8f, -PI.toFloat()/2f, 0.5f, 1f, 0.02f, 0.001f, scope)
     }

@@ -49,7 +49,6 @@ class MovingStick(
         scope.launch {
             val timeIntervalInMs = (timeIntervalInS * 1000f).toLong()
             while (!isRecycling) {
-                println("$angleRad ; $angleSpeed ; $originAcceleration")
                 computeNextValues()
                 delay(timeIntervalInMs)
             }
@@ -85,7 +84,7 @@ class MovingStick(
             remainingMovingDistanceM -= timeIntervalInS * movingSpeedMPerS
             originAcceleration = 0f
         } else {
-            originAcceleration = if (remainingMovingDistanceM == 0f) 0f else - movingSpeedMPerS / timeIntervalInS
+            originAcceleration = if (remainingMovingDistanceM == 0f) 0f else - movingDirection * movingSpeedMPerS / timeIntervalInS
             remainingMovingDistanceM = 0f
             movingDirection = 0f
         }
@@ -93,16 +92,17 @@ class MovingStick(
 
     override fun moveByXCm(dx: Float) {
         remainingMovingDistanceM = dx.absoluteValue * 10f.pow(-2f)
+        val newMovingDirection = if (dx > 0) 1f else if (dx < 0) -1f else 0f
         if (dx != 0f) {
             originAcceleration = if (movingDirection * dx > 0) {
                 0f
             } else if (movingDirection * dx < 0) {
-                2f * movingSpeedMPerS / timeIntervalInS
+                newMovingDirection * 2f * movingSpeedMPerS / timeIntervalInS
             } else {
-                movingSpeedMPerS / timeIntervalInS
+                newMovingDirection * movingSpeedMPerS / timeIntervalInS
             }
         }
-        movingDirection = if (dx > 0) 1f else if (dx < 0) -1f else 0f
+        movingDirection = newMovingDirection
     }
 
     override fun recycle() {
