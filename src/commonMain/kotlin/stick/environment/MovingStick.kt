@@ -54,7 +54,7 @@ class MovingStick(
     }
 
     override fun moveByXCm(dx: Float) {
-        remainingMovingDistanceM += dx.absoluteValue * 10f.pow(-2f)
+        remainingMovingDistanceM = dx.absoluteValue * 10f.pow(-2f)
         movingDirection = if (dx > 0) 1f else if (dx < 0) -1f else 0f
     }
 
