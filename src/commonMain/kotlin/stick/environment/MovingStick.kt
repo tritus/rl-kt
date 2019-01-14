@@ -25,7 +25,7 @@ class MovingStick(
         scope: CoroutineScope
 ) : MovableStick, DisplayableItem, RecyclableObject {
 
-    // equality of moments : J*d²(alpha)/dt² + r*d(alpha)/dt - m*g*l*cos(alpha) + l*m*acc*sin(alpha) = 0
+    // equality of moments : J*d²(alpha)/dt² + r*d(alpha)/dt + m*g*l*cos(alpha) - l*m*acc*sin(alpha) = 0
     // J -> inertiaMoment
     // r -> resistance in the pivot link
     // alpha -> angleRad
@@ -35,12 +35,12 @@ class MovingStick(
     // g -> gravitational constant 9.81
 
     private var angleSpeed = 0f
+    private var originAcceleration = 0.0f
     private var isRecycling = false
     private var remainingMovingDistanceM = 0f
     private var movingDirection = 0f
     private val inertiaMoment = massKg * radiusCm.pow(2) * 10f.pow(-4)
     private val gravitationalConstant = 9.81f
-    private var originAcceleration = 0.0f
 
 
     private val solver: ODESolver = SecondOrderEulerSolver()
