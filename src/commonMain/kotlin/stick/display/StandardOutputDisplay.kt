@@ -2,7 +2,7 @@ package stick.display
 
 import stick.geometry.Size
 
-class StandardOutputDisplay(size: Size<Int>): Display {
+class StandardOutputDisplay(size: Size<Int>) : Display {
     override val width: Int = size.width
     override val height: Int = size.height
 

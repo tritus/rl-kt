@@ -24,4 +24,3 @@ class StickDrawer : ItemDrawer {
         display.draw(image)
     }
 }
-
