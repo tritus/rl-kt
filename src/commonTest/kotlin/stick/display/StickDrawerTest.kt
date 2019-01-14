@@ -18,7 +18,7 @@ class StickDrawerTest {
         expectedMatrix.forEachIndexed { lineIndex, line -> line.forEachIndexed { columnIndex, pixel -> assertEquals(pixel, display.screenMatrix[lineIndex][columnIndex], "expected : $expectedMatrix, got : ${display.screenMatrix}") } }
     }
 
-    class TestDisplay: Display {
+    class TestDisplay : Display {
         override val width: Int = 5
         override val height: Int = 4
 
@@ -29,7 +29,7 @@ class StickDrawerTest {
         }
     }
 
-    class Stick: DisplayableItem {
+    class Stick : DisplayableItem {
         override val originCm = Point(6f, 3f)
         override val radiusCm = 3f
         override val angleRad = 2f / 3f * 3.14f

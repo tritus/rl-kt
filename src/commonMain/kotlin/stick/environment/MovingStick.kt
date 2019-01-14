@@ -15,14 +15,14 @@ import kotlin.math.pow
 import kotlin.math.sin
 
 class MovingStick(
-        override var originCm: Point<Float>,
-        override val radiusCm: Float,
-        override var angleRad: Float,
-        private val massKg: Float,
-        private val movingSpeedMPerS: Float,
-        private val timeIntervalInS: Float,
-        private val pivotFrictionCoefInNMS: Float,
-        scope: CoroutineScope
+    override var originCm: Point<Float>,
+    override val radiusCm: Float,
+    override var angleRad: Float,
+    private val massKg: Float,
+    private val movingSpeedMPerS: Float,
+    private val timeIntervalInS: Float,
+    private val pivotFrictionCoefInNMS: Float,
+    scope: CoroutineScope
 ) : MovableStick, DisplayableItem, RecyclableObject {
 
     // equality of moments : J*d²(alpha)/dt² + r*d(alpha)/dt + m*g*l*cos(alpha) - l*m*acc*sin(alpha) = 0
@@ -41,7 +41,6 @@ class MovingStick(
     private var movingDirection = 0f
     private val inertiaMoment = massKg * radiusCm.pow(2) * 10f.pow(-4)
     private val gravitationalConstant = 9.81f
-
 
     private val solver: ODESolver = SecondOrderEulerSolver()
 
@@ -70,7 +69,7 @@ class MovingStick(
     private fun angleAccelerationFormula(originAcc: Float): (Float, Float) -> Float {
         val radiusMeter = radiusCm * 10f.pow(-2)
         return { angle: Float, angleSpeed: Float ->
-            (-pivotFrictionCoefInNMS*angleSpeed-massKg*gravitationalConstant*radiusMeter*cos(angle)+radiusMeter*massKg*originAcc*sin(angle))/inertiaMoment
+            (-pivotFrictionCoefInNMS * angleSpeed - massKg * gravitationalConstant * radiusMeter * cos(angle) + radiusMeter * massKg * originAcc * sin(angle)) / inertiaMoment
         }
     }
 
