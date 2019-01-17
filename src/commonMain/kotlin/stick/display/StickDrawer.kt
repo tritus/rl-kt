@@ -17,10 +17,10 @@ class StickDrawer : ItemDrawer {
         val cmToCoordinateOnY = display.height.toFloat() / maxYCm
         val startingX = originCm.x * cmToCoordinateOnX
         val startingYFromTop = (maxYCm - originCm.y) * cmToCoordinateOnY
-        image[startingX.toInt()][startingYFromTop.toInt()] = 1
+        if (image.size > startingX.toInt() && image[startingX.toInt()].size > startingYFromTop.toInt()) image[startingX.toInt()][startingYFromTop.toInt()] = 1
         val endingX = (originCm.x + lengthCm * cos(angleRad)) * cmToCoordinateOnX
         val endingYFromTop = (maxYCm - (originCm.y + lengthCm * sin(angleRad))) * cmToCoordinateOnY
-        image[endingX.toInt()][endingYFromTop.toInt()] = 1
+        if (image.size > endingX.toInt() && image[endingX.toInt()].size > endingYFromTop.toInt()) image[endingX.toInt()][endingYFromTop.toInt()] = 1
         display.draw(image)
     }
 }
