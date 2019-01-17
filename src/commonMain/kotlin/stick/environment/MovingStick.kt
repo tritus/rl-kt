@@ -54,8 +54,8 @@ class MovingStick(
         }
     }
 
-    override val xOrigin: Float get() = originCm.x
-    override val angle: Float get() = angleRad
+    override val xOrigin: Float get() { return originCm.x }
+    override val angle: Float get() { return angleRad }
 
     private fun computeNextValues() {
         setNewXOrigin()

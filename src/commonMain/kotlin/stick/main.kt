@@ -14,8 +14,8 @@ import kotlin.math.PI
 
 const val experimentTimeMs = 5000L
 
-const val displayWidthPx = 800
-const val displayHeightPx = 534
+const val displayWidthPx = 60
+const val displayHeightPx = 40
 const val displayFPS = 25
 
 const val stickInitialXCm = 15f
@@ -23,7 +23,7 @@ const val stickInitialYCm = 10f
 const val stickInitialRadiusCm = 4.8f
 const val stickInitialAngleRad = -PI.toFloat() / 2f
 const val stickEndMassKg = 0.5f
-const val stickCartSpeedMPerS = 1f
+const val stickCartSpeedMPerS = 0.5f
 const val pivotFrictionCoefInNMS = 0.001f
 
 expect fun runInScope(block: suspend CoroutineScope.() -> Unit)
@@ -43,7 +43,7 @@ fun main() {
                     this
             )
                     .also { recyclableItems.add(it) }
-                    .also { StickMoverBrain().control(it) }
+                    .also { StickMoverBrain(this).also { recyclableItems.add(it) }.control(it) }
                     .let {
                         DisplayManager(
                                 this,

@@ -1,19 +1,28 @@
 package stick.brain
 
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import stick.brain.model.BrainModel
-import stick.runInScope
+import stick.lifecycle.RecyclableObject
 
-class StickMoverBrain { // TODO Implement RL algorythm
+class StickMoverBrain(val scope: CoroutineScope) : RecyclableObject { // TODO Implement RL algorythm
 
+    private var isRecycling = false
     private val model: BrainModel = DRELUDModel()
     private val reactionTimeInMS = 300L
 
     fun control(stick: MovableStick) {
-        runInScope {
-            val dx = model.bestActionFrom(stick.xOrigin, stick.angle)
-            stick.moveByXCm(dx)
-            delay(reactionTimeInMS)
+        scope.launch {
+            while (!isRecycling) {
+                val dx = model.bestActionFrom(stick.xOrigin, stick.angle)
+                stick.moveByXCm(dx)
+                delay(reactionTimeInMS)
+            }
         }
+    }
+
+    override fun recycle() {
+        isRecycling = true
     }
 }

@@ -10,7 +10,7 @@ import kotlin.math.PI
 class StandardOutputDisplayTest {
     fun testEndToEndOutput() {
         runInScope {
-            val stick = MovingStick(Point(15f, 10f), 4.8f, -PI.toFloat() / 2f, 0.5f, 1f, 0.02f, 0.001f, this)
+            val stick = MovingStick(Point(15f, 10f), 4.8f, -PI.toFloat() / 2f, 0.5f, 0.3f, 0.02f, 0.001f, this)
             val displayManager = DisplayManager(this, StandardOutputDisplay(Size(30, 20)), StickDrawer(), 40)
             displayManager.display(stick)
             delay(2000)
