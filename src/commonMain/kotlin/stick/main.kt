@@ -29,30 +29,33 @@ const val pivotFrictionCoefInNMS = 0.001f
 expect fun runInScope(block: suspend CoroutineScope.() -> Unit)
 
 fun main() {
-    runInScope {
-        val recyclableItems = mutableListOf<RecyclableObject>()
-        MovingStick(
-                Point(stickInitialXCm, stickInitialYCm),
-                stickInitialRadiusCm,
-                stickInitialAngleRad,
-                stickEndMassKg,
-                stickCartSpeedMPerS,
-                1f / (displayFPS.toFloat() * 2),
-                pivotFrictionCoefInNMS,
-                this
-        )
-                .also { recyclableItems.add(it) }
-                .also { StickMoverBrain().control(it) }
-                .let {
-                    DisplayManager(
-                            this,
-                            StandardOutputDisplay(Size(displayWidthPx, displayHeightPx)),
-                            StickDrawer(),
-                            1000L / displayFPS
-                    ).also { manager -> manager.display(it) }
-                }
-                .also { recyclableItems.add(it) }
-                .also { delay(experimentTimeMs) }
-                .also { recyclableItems.forEach { item -> item.recycle() } }
+    val recyclableItems = mutableListOf<RecyclableObject>()
+    try {
+        runInScope {
+            MovingStick(
+                    Point(stickInitialXCm, stickInitialYCm),
+                    stickInitialRadiusCm,
+                    stickInitialAngleRad,
+                    stickEndMassKg,
+                    stickCartSpeedMPerS,
+                    1f / (displayFPS.toFloat() * 2),
+                    pivotFrictionCoefInNMS,
+                    this
+            )
+                    .also { recyclableItems.add(it) }
+                    .also { StickMoverBrain().control(it) }
+                    .let {
+                        DisplayManager(
+                                this,
+                                StandardOutputDisplay(Size(displayWidthPx, displayHeightPx)),
+                                StickDrawer(),
+                                1000L / displayFPS
+                        ).also { manager -> manager.display(it) }
+                    }
+                    .also { recyclableItems.add(it) }
+                    .also { delay(experimentTimeMs) }
+        }
+    } finally {
+        recyclableItems.forEach { item -> item.recycle() }
     }
 }
