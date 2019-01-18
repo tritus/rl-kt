@@ -6,7 +6,7 @@ import kotlinx.coroutines.launch
 import stick.brain.model.BrainModel
 import stick.lifecycle.RecyclableObject
 
-class StickMoverBrain(val scope: CoroutineScope) : RecyclableObject { // TODO Implement RL algorythm
+class StickMoverBrain(private val scope: CoroutineScope) : RecyclableObject { // TODO Implement RL algorythm
 
     private var isRecycling = false
     private val model: BrainModel = DRELUDModel()
@@ -15,11 +15,21 @@ class StickMoverBrain(val scope: CoroutineScope) : RecyclableObject { // TODO Im
     fun control(stick: MovableStick) {
         scope.launch {
             while (!isRecycling) {
-                val dx = model.bestActionFrom(stick.xOrigin, stick.angle)
-                stick.moveByXCm(dx)
+                val bestAction = model.bestActionFrom(stick.xOrigin, stick.angle)
+                dxFrom(bestAction).let { stick.moveByXCm(it) }
                 delay(reactionTimeInMS)
             }
         }
+    }
+
+    private fun dxFrom(bestAction: List<Float>): Float {
+        return bestAction.foldIndexed(0f to 0f) { index, actionPair, actionValue ->
+            if (actionValue > actionPair.second) {
+                (index - 1).toFloat() * 15f to actionValue
+            } else {
+                actionPair
+            }
+        }.let { it.first }
     }
 
     override fun recycle() {
