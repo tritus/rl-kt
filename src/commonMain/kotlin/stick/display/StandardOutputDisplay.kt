@@ -15,7 +15,7 @@ class StandardOutputDisplay(size: Size<Int>) : Display {
         val charImage = (0 until height).fold("") { outputImageChar, lineIndex ->
             val charLine = (0 until width).fold("") { outputLineChar, columnIndex ->
                 val pixelValue = image[columnIndex][lineIndex]
-                val pixelChar = if (pixelValue == 0) " " else "o"
+                val pixelChar = if (pixelValue == 0) " " else "O"
                 "$outputLineChar$pixelChar"
             }
             "$outputImageChar\n$charLine"
