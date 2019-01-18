@@ -43,7 +43,7 @@ fun main() {
                     this
             )
                     .also { recyclableItems.add(it) }
-                    .also { StickMoverBrain(this).also { recyclableItems.add(it) }.control(it) }
+                    .also { StickMoverBrain().also { recyclableItems.add(it) }.control(it, this) }
                     .let {
                         DisplayManager(
                                 this,
